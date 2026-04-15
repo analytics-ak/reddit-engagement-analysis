@@ -1,170 +1,265 @@
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/analytics-ak/developer-sentiment/blob/main/developer-sentiment.ipynb)
-[![Open in Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/analytics-ak/developer-sentiment/HEAD)
-[![Open in Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/kernels/welcome?src=https://github.com/analytics-ak/developer-sentiment/blob/main/developer-sentiment.ipynb)
+<div align="center">
 
+# Reddit Community Engagement Analysis
 
-# Developer Sentiment Analysis
+**Python | Pandas | Matplotlib | Seaborn | Scikit-learn**
 
-## Project Overview
-This project takes a closer look at over **4.6 million Stack Overflow posts** to figure out what really makes developers engage with a topic. The idea was simple — find out which kinds of discussions get people talking, and how the tone of a post (whether emotional or factual) changes how others react to it.
+Analyzed 4.5 million Reddit posts across 35 tags to find which topics actually get engagement, which popular topics are underperforming, and what kind of language separates high-scoring posts from the rest.
 
-While working through the data, I focused on keeping it clean, scalable, and readable. The dataset included **35 tags and 40 topic areas**, so I spent time making sure everything was consistent before diving into analysis.
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?logo=pandas&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-3.x-11557C)
+![Seaborn](https://img.shields.io/badge/Seaborn-0.13-4C72B0)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)
 
-One clear pattern stood out — posts that felt **personal or emotional** (like “Teenage” or “Nature”) drew far more interest than neutral ones like “Work.” It shows that even in a technical space, people connect most when a post feels human.
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/analytics-ak/reddit-engagement-analysis/blob/main/reddit_engagement_analysis.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/analytics-ak/reddit-engagement-analysis/main?labpath=reddit_engagement_analysis.ipynb)
 
-The findings from this analysis can help **community teams, product owners, and analysts** understand what kind of content keeps people engaged and how emotional tone can shape user sentiment.
-
----
-
-## Key Finding
-The data made one thing very clear — it’s not how often a topic appears that drives attention, but what it’s about and how it feels.
-
-Posts that show a bit of **emotion or personality** — like “Teenage” or “Nature” — perform much better than neutral or work-related ones. Even though “Work” was one of the most discussed tags, it didn’t connect with readers as much.
-
-In short, **people respond to people — not just information.** When a topic sounds relatable, honest, or personal, engagement goes up naturally.
+</div>
 
 ---
 
-## Tools Used
-I used **Python and its core libraries — Pandas, NumPy, Matplotlib, Seaborn, and Scikit-learn** — to clean, explore, and visualize the data. Since the dataset contained millions of rows, I focused on keeping the process **fast, memory-efficient, and easy to scale.**
+## Problem Statement
 
-- **Python 3**
-- Pandas – for data cleaning and manipulation  
-- NumPy – for numerical operations  
-- Matplotlib & Seaborn – for visualizations  
-- Scikit-learn (CountVectorizer) – for text and word frequency analysis  
-- Re (Regular Expressions) – for removing links and special characters  
+Community platforms have millions of posts but only a handful get any real attention. Knowing which topics are popular isn't enough — some popular topics get tons of posts but barely any reaction, while smaller topics punch way above their weight.
 
----
+This project answers three questions:
 
-## Dataset
-- **File Name:** `new_tag_data.csv` (from Kaggle)  
-- **Total Posts:** 4,594,008  
-- **After Cleaning:** 4,376,084 unique posts (removed 217,924 duplicates)
-
-### Columns Studied
-- `score` – How many people liked the post  
-- `body` – The full text content of the post  
-- `Topic` – A number showing the general topic (40 in total)  
-- `Tag` – Text label for the post (35 in total)  
+- **Which topics consistently get high engagement — not just on average, but reliably?**
+- **Why do some popular topics attract lots of posts but very little reaction?**
+- **What kind of language shows up in high-scoring posts that doesn't appear in low-scoring ones?**
 
 ---
 
-## Main Insights
-Before jumping into charts and numbers, here’s what I noticed while exploring patterns in the data. I compared how often topics appeared with how well they scored and grouped them into categories based on their behaviour. This made it easier to see which tags consistently attract attention — and which ones quietly fade into the background.
+## What This Project Does
 
-### Popularity vs. Engagement
-A scatter chart compared how often tags appear vs. how engaging they are:
-
-- **Star Performers (Popular + High Score):** Teenage, Gender  
-- **General Chatter (Popular + Low Score):** Work, Arg, Games, Social, College  
-- **Hidden Gems (Less Popular + High Score):** Nature, Photography  
-- **Less Active (Less Popular + Low Score):** Hardware, Politics  
-
-![Popularity vs Engagement](img1.png)
-
-### Frequency vs. Engagement – The “Work” Tag
-Posting more doesn’t mean people will like it. For example, “Work” is the 3rd most used tag but ranks 24th in score. “Teenage” is both the most common and most liked topic.
-
-**Top 5 by Score:**
-1. Teenage (10.38)  
-2. Nature (9.60)  
-3. Gender (8.40)  
-4. Media (8.22)  
-5. Treatment (7.90)  
-**Work Tag Score:** 4.60 (Low)
-
-![Work Tag Word Cloud](img2.png)
-![Work Tag Word Cloud](img3.png)
-
-### Deep Dive on “Work” Tag
-I analyzed around 360k posts tagged “Work.” Common words included: *just, like, people, time, know, work, job, company.* These are simple and practical — not emotional — which explains their lower engagement.
-
-![Work Tag Word Cloud](img4.png)
-
-### Top 30 Words in All Posts
-After cleaning links, symbols, and stopwords, the most frequent words were: **just, like, dont, people, im, think, time, know, really, good.** This shows that most posts are personal and conversational in tone.
-
-![Work Tag Word Cloud](img5.png)
+- Cleaned and deduplicated a **4.5 million row** Reddit dataset
+- Used a validated **200K sample** for efficient analysis without losing accuracy
+- Showed why averages are misleading for this data and used median + IQR instead
+- Filtered out small tags to avoid drawing conclusions from noise
+- Built a **4-quadrant framework** that classifies every tag by volume and engagement
+- Compared the actual words used in high vs low engagement posts
+- Deep-dived into "Work" — a tag that's heavily posted but poorly engaged — to understand why
 
 ---
 
-## Business Uses
-Here’s how these insights can be useful beyond just charts and analysis:
+## The Dataset
 
-- **Growing communities:** Topics like *Nature* and *Photography* may not appear often, but when they do, people love them.  
-- **Improving engagement:** Posts with emotion or a story-like tone perform better than purely factual ones.  
-- **Quality checks:** Emotional or sensitive tags like *Teenage* or *Gender* often attract strong reactions, so they need extra moderation.  
-- **Better recommendations:** Suggest posts from the same “engagement cluster,” not just by similar tags.  
-- **Language understanding:** How users discuss *Work* or *Treatment* gives clues about motivation and frustration.
+- **Source:** [Kaggle — Reddit Labeled Post Data](https://www.kaggle.com/datasets/vaibhavsxn/reddit-comments-labeled-data)
+- **Rows:** ~4.6 million
+- **Columns:** 4 (score, body, Topic, Tag)
+- **Tags:** 35 categories (Teenage, Work, Gender, Games, Social, etc.)
+- **Topics:** 40 numeric IDs
+
+Each row contains a Reddit post's score (upvotes), text body, topic ID, and a readable tag label.
+
+---
+
+## Why This Matters
+
+- Helps content or community teams focus on topics that consistently perform, not just ones that go viral once
+- Spots high-volume topics where posting effort is being wasted because nobody reacts
+- Shows that engagement depends on how something is written, not just what topic it falls under
 
 ---
 
-## Steps Followed
+## Sampling Approach
 
-### Step 1: Load and Clean Data
-- Loaded dataset with 4.6M posts  
-- Removed 217K duplicates  
-- Fixed data types and standardized tag names  
-- Optimized memory for better performance  
+The full dataset has 4.3 million clean rows. Running every chart on that is unnecessary. A random sample of 200,000 rows was taken and validated against the full data.
 
-### Step 2: Explore Data (EDA)
-- Analyzed score and tag distributions  
-- Found which tags get most attention  
-- Built scatterplots comparing popularity and engagement  
-
-### Step 3: Text and Relationship Study
-- Used heatmaps to show relationships between Topics and Tags  
-- Cleaned and analyzed text for patterns  
-- Explored the “Work” tag deeply to understand its lower engagement  
+Mean and median scores for the top 5 tags match almost exactly between the sample and the full dataset. Tag proportions closely match the full dataset. The sample holds — all analysis from this point uses it.
 
 ---
-## Expected Outcomes
-This project looks at over **4.3 million Stack Overflow posts** to find what kind of topics get people most engaged.
 
-You’ll see insights on which tags attract more attention — especially how **emotional topics** compare to **neutral ones** like “Work.” Simple charts and summaries make it easy to spot which topics are popular, hidden gems, or not doing well.
+## Key Findings
 
-It also shows how Python can handle big text data smoothly and efficiently.
+### 1. Most Posts Get Almost No Attention
+
+The score distribution is extremely skewed. Median score is 2, mean is 6.2 — pulled up by a few viral posts. 90% of all posts score 8 or below. This is why the analysis uses median instead of mean wherever possible — the average is misleading.
+
+![Score Distribution](images/score_distribution.png)
+
+---
+
+### 2. Tag Rankings Change When You Use the Right Metric
+
+When you rank tags by mean score, Teenage comes out on top at 10.58. But the median for almost every tag is 2. The real difference between tags shows up in the mean and IQR — some tags produce more high-scoring posts than others, even though the typical post in every tag scores about the same.
+
+Tags with fewer than 500 posts were filtered out to keep the rankings reliable.
+
+| Tag | Posts | Mean Score | Median | IQR |
+|-----|-------|-----------|--------|-----|
+| Teenage | 20,541 | 10.58 | 2.0 | 3.0 |
+| Gender | 10,341 | 8.68 | 2.0 | 4.0 |
+| International | 7,653 | 8.32 | 2.0 | 4.0 |
+| Nature | 4,842 | 8.06 | 2.0 | 3.0 |
+| Photography | 2,215 | 8.03 | 2.0 | 2.5 |
+
+---
+
+### 3. Some Tags Are Consistent, Others Are Spiky
+
+The boxplot below shows the score spread for the top 10 tags by volume. Gender and International have wide boxes — their engagement is all over the place. Work and TV are tight and low — consistently weak.
+
+A wide box doesn't mean the tag is bad. It means some posts in that tag do really well while most don't. A narrow box that sits low means the tag just doesn't generate much engagement at all.
+
+![Tag Stability](images/tag_stability_boxplot.png)
+
+---
+
+### 4. The 4-Quadrant View — This Is the Main Chart
+
+Every tag with 500+ posts plotted by volume (how many posts) vs engagement (mean score). The quadrant lines are set at the median of each axis.
+
+![Quadrant Chart](images/popularity_vs_engagement_quadrant.png)
+
+Four groups come out of this:
+
+- **Top-right — High Volume + High Engagement:** Teenage, Gender, College. These are the strongest topics. They get posted a lot, and people react to them.
+- **Bottom-right — High Volume + Low Engagement:** Work, Games, TV, Social. Tons of posts, but weak response. This is where effort is being wasted.
+- **Top-left — Niche + Loved:** Photography, Nature, Treatment. Small audiences but strong reactions. Growth opportunities.
+- **Bottom-left — Low Activity:** Hardware, Conversation, Laptops. Not much posting, not much reaction. Lowest priority.
+
+---
+
+### 5. Deep Dive — Why "Work" Underperforms
+
+Work sits in the bottom-right quadrant — one of the most posted tags, but one of the lowest scoring. The quadrant chart flagged it, so we dug in.
+
+Comparing the top 25 words in Work posts vs Teenage posts (the highest engagement tag) tells the story:
+
+![Work vs Teenage Words](images/work_vs_teenage_words.png)
+
+Work posts use more practical and neutral language, while Teenage posts include more personal and day-to-day expressions.
+
+This does not fully explain the engagement gap, but it suggests that posts that feel more personal or relatable may perform better than purely informational ones.
+
+---
+
+### 6. High vs Low Engagement — Same Words, Different Results
+
+This one goes beyond topic-level analysis. ALL posts were split into two groups — top 10% by score and bottom 50% — and the most common words were compared.
+
+![High vs Low Words](images/high_vs_low_engagement_words.png)
+
+The result is interesting: the most common words are almost the same in both groups. "Like," "people," "think," "time," "know" — they show up everywhere.
+
+This tells us something important. Engagement isn't about using specific keywords. It's about how ideas are framed — context, tone, and personal expression matter more than word choice.
+
+---
+
+## What Didn't Separate High From Low
+
+| Factor | Result |
+|--------|--------|
+| Specific keywords | Same common words appear in both high and low scoring posts |
+| Topic ID alone | Topics are just numeric codes — no insight without the Tag labels |
+
+This reinforces that engagement is not driven by simple keyword presence.
+---
+
+## Recommendations
+
+Four things a community or content platform should do based on this data:
+
+**1. Put more weight behind high-engagement topics**
+Tags like Teenage, Gender, and International consistently drive strong reactions. Give them more visibility, better placement, and priority in feeds.
+
+**2. Rethink high-volume, low-engagement areas**
+Work, Games, and TV get lots of posts but weak scores. The language in these posts is flat and factual. Encouraging storytelling or opinion-based formats in these areas could help.
+
+**3. Grow the niche-but-loved topics**
+Photography, Nature, and Treatment have small audiences but strong engagement. Promoting them to a wider audience could bring in users who actually interact, not just scroll.
+
+**4. Focus on writing style, not just topic**
+Engagement is not explained by keywords alone. The analysis suggests that how content is written — including tone and framing — may play an important role alongside topic selection.
 
 ---
 
 ## Limitations
-- The data covers about **4.6 million posts** collected at one point in time, so newer trends may differ.  
-- Only **English-language posts** were analyzed.  
-- Some cleaning steps might have removed useful posts or kept a few duplicates.  
-- Emotion detection is based on common word use, so it may miss subtle tones or context.  
-- The analysis finds **patterns and correlations**, not cause-and-effect relationships.  
+
+- **Score is not sentiment.** Reddit upvotes measure popularity and agreement, not whether the post is positive or negative. A highly upvoted post could be angry, sad, or funny.
+- **Dataset is pre-labelled.** The Tag and Topic columns were assigned before this analysis, not discovered from the text.
+- **Score doesn't capture full engagement.** Comments, shares, saves, and awards are all forms of engagement that this data doesn't include.
+- **Sample vs population.** Analysis uses a 200K sample from 4.3M rows. Validation shows it holds, but edge cases in very small tags may not be fully captured.
+- **No time dimension.** No timestamps in the data, so we can't track trends or seasonal patterns.
 
 ---
 
-## Result Summary
-In total, the analysis covered over **4.3 million unique posts** and found clear engagement patterns across 35 tags. **Emotional or personal topics scored 2–3× higher** than neutral ones like “Work.”
+## Conclusion
+
+Most Reddit posts get almost no attention — the median score is 2, and 90% of posts score 8 or below. The few posts that do well tend to come from the same handful of topics.
+
+The biggest problem area is tags like Work and Games — people post a lot, but nobody really reacts. When you look at the language, it makes sense. These posts are plain and factual. The tags that do well (like Teenage and Gender) have Posts that feel more personal or experience-driven, tend to show higher engagement, while purely informational posts often receive weaker responses.
+
+For any platform trying to improve engagement, the answer isn't just picking the right topic. It's about how people write. Posts that feel personal get more reaction than posts that just share information.
 
 ---
 
-## Final Summary
-This project was more than just running numbers — it was about understanding how **real people interact** in a technical space. After studying millions of posts, one theme stood out: **emotion builds connection.**
+## Tools & Libraries
 
-Posts that sound real, relatable, or personal tend to get noticed more. It’s a reminder that even in a tech community, **human tone still wins.**
-
-This work also shows how large datasets can reveal social behaviour at scale — useful for any product or community team looking to improve engagement. For me, it’s an example of how **data analysis can tell human stories** when you look beyond just numbers.
+| Tool | Used For |
+|------|----------|
+| Python | Data cleaning, feature engineering, analysis |
+| Pandas | Grouping, filtering, aggregation |
+| NumPy | Numerical operations |
+| Matplotlib | All charts and visualizations |
+| Seaborn | Statistical plots and styled visuals |
+| Scikit-learn | CountVectorizer for word frequency analysis |
+| Jupyter Notebook | Full end-to-end analysis |
 
 ---
 
-## Links
-- **Dataset:** [Kaggle Developer Sentiment Dataset](https://www.kaggle.com/datasets/vaibhavsxn/reddit-comments-labeled-data)   
-- **LinkedIn:** [Ashish Kumar Dongre](https://www.linkedin.com/in/analytics-ashish/)
+## Project Structure
 
+```
+reddit-engagement-analysis/
+│
+├── reddit_engagement_analysis.ipynb      # Full analysis notebook
+├── new_tag_data.csv                       # Dataset
+├── README.md                              # This file
+│
+└── images/                                # All charts from the notebook
+    ├── score_distribution.png
+    ├── tag_stability_boxplot.png
+    ├── popularity_vs_engagement_quadrant.png
+    ├── work_vs_teenage_words.png
+    └── high_vs_low_engagement_words.png
+```
 
-## How to Run the Project
-```bash
-# 1. Clone the repository
-git clone https://github.com/analytics-ak/developer-sentiment.git
-cd developer-sentiment
+---
 
-# 2. Install dependencies
-pip install pandas numpy matplotlib seaborn scikit-learn
+## How to Run This Project
 
-# 3. Run the notebook
-jupyter notebook "developer-sentiment.ipynb"
+1. Clone this repo
+   ```bash
+   git clone https://github.com/analytics-ak/reddit-engagement-analysis.git
+   ```
+2. Install the required libraries
+   ```bash
+   pip install pandas numpy matplotlib seaborn scikit-learn
+   ```
+3. Open the notebook
+   ```bash
+   jupyter notebook reddit_engagement_analysis.ipynb
+   ```
+4. Run all cells — charts will generate automatically
 
+---
+
+## Profile & Dataset
+
+* 🔗 **LinkedIn:** [View My Profile](https://www.linkedin.com/in/analytics-ashish/)
+* 📂 **Dataset:** [Reddit Labeled Post Data on Kaggle](https://www.kaggle.com/datasets/vaibhavsxn/reddit-comments-labeled-data)
+* 💻 **GitHub Repository:** [Reddit Engagement Analysis](https://github.com/analytics-ak/reddit-engagement-analysis/)
+* 📘 **Notebook:** [reddit_engagement_analysis.ipynb](https://github.com/analytics-ak/reddit-engagement-analysis/blob/main/reddit_engagement_analysis.ipynb)
+
+<br>
+
+## Author
+
+**Ashish Kumar Dongre**
+Data Analyst
+
+- Python | Pandas | Data Analysis
+- Focus: **Business-driven data insights**
