@@ -216,7 +216,6 @@ For any platform trying to improve engagement, the answer isn't just picking the
 reddit-engagement-analysis/
 │
 ├── reddit_engagement_analysis.ipynb      # Full analysis notebook
-├── new_tag_data.csv                       # Dataset
 ├── README.md                              # This file
 │
 └── images/                                # All charts from the notebook
