@@ -223,4 +223,4 @@ For any platform trying to improve community health, the answer is not more post
 
 **Ashish Kumar Dongre**
 
-🔗 [LinkedIn](https://www.linkedin.com/in/analytics-ashish/) &nbsp;|&nbsp; 💻 [GitHub](https://github.com/analytics-ak/reddit-engagement-analysis/) &nbsp;|&nbsp; 📂 [Dataset on Kaggle](https://www.kaggle.com/datasets/vaibhavsxn/reddit-comments-labeled-data)
+🔗 [LinkedIn](https://www.linkedin.com/in/ashish-kumar-dongre-742a6217b/) &nbsp;|&nbsp; 💻 [GitHub](https://github.com/analytics-ak/reddit-engagement-analysis/) &nbsp;|&nbsp; 📂 [Dataset on Kaggle](https://www.kaggle.com/datasets/vaibhavsxn/reddit-comments-labeled-data)
